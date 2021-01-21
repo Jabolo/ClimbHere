@@ -74,7 +74,6 @@ class _GymFormPageState extends ModularState<GymFormPage, GymFormController> {
                             child: FlatButton(
                               child: Text("Save"),
                               onPressed:
-                                   //$$$$$$$$$$$$$$$$$$$#@!#@!$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$@!#@!!
                               controller.gymFormState == GymFormState.LOADING ? null : () {
                                 if(_gymFormBuilderKey.currentState.saveAndValidate()){
                                   controller.saveGym(_gymFormBuilderKey.currentState.value);

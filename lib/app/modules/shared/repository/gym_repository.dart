@@ -26,11 +26,8 @@ class GymRepository extends Disposable {
     formData.files.addAll(wallsImages.map<MapEntry<String, MultipartFile>>(
         (image) => _createMapEntryFromFile(image)));
     // Call API.
-    Response<List> response = await dio.post<List>('/amazon/walls',
-        data: formData,
-        // options: Options(
-        //     headers: {'Content-Type': 'application/x-www-form-urlencoded'}),
-    );
+    Response<List> response =
+        await dio.post<List>('/amazon/walls', data: formData);
     if (_successResponse(response))
       return response.data
           .map<WallModel>((json) => WallModel.fromJson(json))
@@ -39,17 +36,17 @@ class GymRepository extends Disposable {
       return null;
   }
 
+  MapEntry<String, MultipartFile> _createMapEntryFromFile(File image) {
+    return MapEntry<String, MultipartFile>('walls',
+        MultipartFile.fromFileSync(image.path, filename: basename(image.path)));
+  }
+
   Future<GymModel> insertGym(GymModel gymModel) async {
     Response<Map> response = await dio.post('/gym', data: gymModel);
     if (_successResponse(response)) {
       return GymModel.fromJson(response.data);
     } else
       return null;
-  }
-
-  MapEntry<String, MultipartFile> _createMapEntryFromFile(File image) {
-    return MapEntry<String, MultipartFile>('walls',
-        MultipartFile.fromFileSync(image.path, filename: basename(image.path)));
   }
 
   @override

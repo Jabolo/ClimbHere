@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:transparent_image/transparent_image.dart';
+
 import 'gym_controller.dart';
 
 class GymPage extends StatefulWidget {
@@ -17,9 +18,10 @@ class GymPage extends StatefulWidget {
 }
 
 class _GymPageState extends ModularState<GymPage, GymController> {
-
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = new GlobalKey<RefreshIndicatorState>();
-  final GlobalKey<FormBuilderState> _searchFormBuilderKey = new GlobalKey<FormBuilderState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      new GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<FormBuilderState> _searchFormBuilderKey =
+      new GlobalKey<FormBuilderState>();
 
   @override
   void initState() {
@@ -42,30 +44,39 @@ class _GymPageState extends ModularState<GymPage, GymController> {
         child: Column(
           children: <Widget>[
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 children: <Widget>[
-                  Text('Gyms', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),),
-                  SizedBox(height: 12,),
+                  Container(
+                    child: Text(
+                      'ClimbHERE',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                    ),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.cyan, width: 2),
+                    borderRadius: BorderRadius.circular(30)),
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
                   FormBuilder(
                     onChanged: (_) {
-                      controller.fetchGyms(GymModel.fromJson(_searchFormBuilderKey.currentState.value));
+                      controller.fetchGyms(GymModel.fromJson(
+                          _searchFormBuilderKey.currentState.value));
                     },
                     key: _searchFormBuilderKey,
-                    initialValue: {
-                      'gymName': null
-                    },
+                    initialValue: {'gymName': null},
                     child: Column(
                       children: <Widget>[
                         FormBuilderTextField(
                           attribute: 'gymName',
                           maxLines: 1,
                           decoration: InputDecoration(
-                              labelText: 'Search',
+                              hintText: 'Search',
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(40)
-                              )
-                          ),
+                                  borderRadius: BorderRadius.circular(30))),
                         )
                       ],
                     ),
@@ -75,11 +86,16 @@ class _GymPageState extends ModularState<GymPage, GymController> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(20),
                 child: Observer(builder: (_) {
                   if (controller.gymState == GymState.LOADING) {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: Column(
+                        children: [
+                          CircularProgressIndicator(),
+                          LinearProgressIndicator(),
+                        ],
+                      ),
                     );
                   } else if (controller.gymState == GymState.EMPTY) {
                     return RefreshIndicator(
@@ -89,7 +105,9 @@ class _GymPageState extends ModularState<GymPage, GymController> {
                         await controller.fetchGyms(GymModel());
                       },
                       child: ListView.builder(
-                          itemCount: controller.gyms.length, itemBuilder: (_, i) => _buildGymTile(controller.gyms[i])),
+                          itemCount: controller.gyms.length,
+                          itemBuilder: (_, i) =>
+                              _buildGymTile(controller.gyms[i])),
                     );
                   } else {
                     return Container();
@@ -152,4 +170,3 @@ class _GymPageState extends ModularState<GymPage, GymController> {
     );
   }
 }
-
