@@ -1,16 +1,5 @@
 # climb_here_flutter
 
-A new Flutter project.
+An app will consist of 2 parts: backend and frontend. The main goal is to learn how to connect: Flutter + Backend using REST API.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+FLutter libs that may be used: BLoC, Dio, Mockito Backend tech considered: SpringBoot, GCP/Firestore/AWS
